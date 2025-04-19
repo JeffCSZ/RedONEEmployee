@@ -24,6 +24,9 @@ builder.Services.AddSerilog();
 
 builder.Host.UseSerilog();
 
+// Add MVC services to the dependency injection container
+builder.Services.AddControllersWithViews();
+
 // Cycle Error Fix
 builder.Services.AddControllers()
     .AddJsonOptions(options =>
@@ -56,6 +59,13 @@ app.UseHttpsRedirection();
 
 app.UseAuthorization();
 
+// This code is for MapControllers of APIController Only
 app.MapControllers();
+
+// This code is for MapControllers of MVCController Only
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}"
+);
 
 app.Run();
