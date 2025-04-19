@@ -1,11 +1,18 @@
 using Microsoft.EntityFrameworkCore;
 using RedONEEmployee.Data;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 
-builder.Services.AddControllers();
+// Cycle Error Fix
+builder.Services.AddControllers()
+    .AddJsonOptions(options =>
+    {
+        options.JsonSerializerOptions.ReferenceHandler =
+        ReferenceHandler.IgnoreCycles;
+    });
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -15,6 +22,8 @@ builder.Services.AddSwaggerGen();
 
 // Method 2:
 builder.Services.AddDbContext<MyDBContext>();
+
+
 
 var app = builder.Build();
 

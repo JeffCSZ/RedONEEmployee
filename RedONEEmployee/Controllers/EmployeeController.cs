@@ -16,7 +16,7 @@ namespace RedONEEmployee.Controllers
             //var employee = _context.Employees.ToList();
             //return Ok(employee);
             // use Entity Framework to call Store Proc
-            var employees = _context.Database.SqlQueryRaw<EmployeeDTO>("EXEC sp_GetAllEmployees").ToList();
+            var employees = _context.Database.SqlQueryRaw<EmployeeDTO2>("EXEC sp_GetAllEmployees").ToList();
             return Ok(employees);
         }
 

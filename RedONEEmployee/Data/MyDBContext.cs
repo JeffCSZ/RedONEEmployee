@@ -31,6 +31,11 @@ public partial class MyDBContext(DbContextOptions<MyDBContext> options, IConfigu
             entity.HasIndex(e => e.DepartmentId, "IX_Employees_DepartmentId");
 
             entity.HasOne(d => d.Department).WithMany(p => p.Employees).HasForeignKey(d => d.DepartmentId);
+            //modelBuilder.Entity<Department>()
+            //.HasMany(d => d.Employees)
+            //.WithOne(e => e.Department)
+            //.HasForeignKey(e => e.DepartmentId)
+            //.OnDelete(DeleteBehavior.Cascade);
         });
 
         OnModelCreatingPartial(modelBuilder);

@@ -12,5 +12,6 @@ namespace RedONEEmployee.Models
 
         // FK to DepartmentId
         public int DepartmentId { get; set; }
+        public string DepartmentName { get; set; } // Flatten Department details
     }
 }
