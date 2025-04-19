@@ -1,2 +1,31 @@
 ﻿@model int
 <h1>@Model</h1>
+<div id="employeeCard"></div>
+    <script>
+    $(document).ready(function () {
+        $.ajax({
+            url: '/api/Employee/GetEmployeeByID/' + @Model,
+            type: 'GET',
+            success: function (employee) {
+                if (employee != undefined){
+                    const content = `
+                                    <div class="col-md-4">
+                                        <div class="card shadow-sm">
+                                            <div class="card-body">
+                                                <h5 class="card-title">ID: ${employee.employeeId}</h5>
+                                                <p class="card-text">Name: ${employee.employeeName}</p>
+                                            </div>
+                                        </div>
+                                    </div>`;
+                    $('#employeeCard').html(content);
+                }
+                else{
+                    $('#employeeCard').html('<h2> Error, Cant Find the Employee ' + @Model + '</h2>');
+                }       
+            },
+            error: function () {
+                $('#employeeCard').html('<p class="text-danger">Employee not found.</p>');
+            }
+        });
+    });
+    </script>
