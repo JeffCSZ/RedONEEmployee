@@ -30,5 +30,15 @@ namespace RedONEEmployee.Controllers
 
             return Ok();
         }
+
+        [HttpGet("GetEmployeeWithDepartmentName")]
+        public ActionResult GetEmployeeWithDepartmentName()
+        {
+            //var employee = _context.Employees.ToList();
+            //return Ok(employee);
+            // use Entity Framework to call Store Proc
+            var employees = _context.Database.SqlQueryRaw<EmployeeDTO>("EXEC sp_GetAllEmployeesWithDepartmentName").ToList();
+            return Ok(employees);
+        }
     }
 }
