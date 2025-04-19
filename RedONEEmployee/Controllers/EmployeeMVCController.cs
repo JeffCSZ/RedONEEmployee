@@ -16,5 +16,10 @@ namespace RedONEEmployee.Controllers
             var employee = _context.Employees.FirstOrDefault(x => x.Id == id);
             return View(employee);
         }
+
+        public IActionResult GetEmployeeByID2(int id)
+        {
+            return View(id);
+        }
     }
 }

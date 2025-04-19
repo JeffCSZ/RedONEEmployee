@@ -45,5 +45,12 @@ namespace RedONEEmployee.Controllers
             var employees = _context.Database.SqlQueryRaw<EmployeeDTO>("EXEC sp_GetAllEmployeesWithDepartmentName").ToList();
             return Ok(employees);
         }
+
+        [HttpGet("GetEmployeeByID/{id:int}")]
+        public ActionResult GetEmployeeByID(int id)
+        {
+            var emp = _context.Employees.FirstOrDefault(x => x.Id == id);
+            return Ok(emp);
+        }
     }
 }
