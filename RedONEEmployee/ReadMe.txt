@@ -11,3 +11,20 @@ docker run -e 'ACCEPT_EULA=1' \
 --------------------------------------------------------------------------------------------------------------------
  Scaffold-DbContext "Server=192.168.1.9;User Id=sa;Password=tcc123#@!;Database=MyDB;Trusted_Connection=False;Encrypt=False;MultipleActiveResultSets=False;" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Data
  In the DbContext generated, move ConnectionStrings to appsettings.json for security
+
+ 3. Another Way to configure Database connection
+ --------------------------------------------------------------------------------------------------------------------
+ // DI IConfiguration 
+ public partial class MyDBContext(DbContextOptions<MyDBContext> options, IConfiguration _configuration) :DbContext (options)
+
+ // Set Connnection string
+ protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+    {
+        if (!optionsBuilder.IsConfigured)
+        {
+            optionsBuilder.UseSqlServer(_configuration.GetConnectionString("Default"));
+        }
+    }
+
+ // Program.cs
+ builder.Services.AddDbContext<MyDBContext>();
