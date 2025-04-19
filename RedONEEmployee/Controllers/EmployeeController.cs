@@ -13,8 +13,11 @@ namespace RedONEEmployee.Controllers
         [HttpGet]
         public ActionResult GetAllEmployee()
         {
-            var employee = _context.Employees.ToList();
-            return Ok(employee);
+            //var employee = _context.Employees.ToList();
+            //return Ok(employee);
+            // use Entity Framework to call Store Proc
+            var employees = _context.Database.SqlQueryRaw<EmployeeDTO>("EXEC sp_GetAllEmployees").ToList();
+            return Ok(employees);
         }
 
         [HttpPost]
