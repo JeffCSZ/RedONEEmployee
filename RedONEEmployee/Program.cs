@@ -1,10 +1,28 @@
 using Microsoft.EntityFrameworkCore;
 using RedONEEmployee.Data;
+using Serilog;
+using Serilog.Templates;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 
+//Add Serillog
+Log.Logger = new LoggerConfiguration()
+    .MinimumLevel.Debug() // Set minimum log level
+    .WriteTo.Console(new ExpressionTemplate(
+        "[{@t:HH:mm:ss} {@l:u3}] {@m}\n{@x}")) // Console output with custom format
+    .WriteTo.File(
+        path: "logs/log-.txt", // Log file path with date suffix
+        rollingInterval: RollingInterval.Day, // Roll files daily
+        retainedFileCountLimit: 7, // Keep logs for 7 days
+        rollOnFileSizeLimit: true, // Roll if file size exceeds limit
+        fileSizeLimitBytes: 10_000_000) // 10 MB file size limit
+    .CreateLogger();
+
+builder.Services.AddSerilog();
 // Add services to the container.
+
+builder.Host.UseSerilog();
 
 // Cycle Error Fix
 builder.Services.AddControllers()

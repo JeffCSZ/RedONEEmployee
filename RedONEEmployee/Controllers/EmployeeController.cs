@@ -8,7 +8,7 @@ namespace RedONEEmployee.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController(MyDBContext _context) : ControllerBase
+    public class EmployeeController(MyDBContext _context, ILogger<EmployeeController> _logger) : ControllerBase
     {
         [HttpGet]
         public ActionResult GetAllEmployee()
@@ -16,6 +16,11 @@ namespace RedONEEmployee.Controllers
             //var employee = _context.Employees.ToList();
             //return Ok(employee);
             // use Entity Framework to call Store Proc
+
+            // Serilog
+            _logger.Log(LogLevel.Error, "Error Message");
+            _logger.Log(LogLevel.Information, "Information Message");
+            _logger.Log(LogLevel.Warning, "Warning Message");
             var employees = _context.Database.SqlQueryRaw<EmployeeDTO2>("EXEC sp_GetAllEmployees").ToList();
             return Ok(employees);
         }
