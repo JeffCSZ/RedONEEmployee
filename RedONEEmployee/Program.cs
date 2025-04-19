@@ -65,7 +65,7 @@ app.MapControllers();
 // This code is for MapControllers of MVCController Only
 app.MapControllerRoute(
     name: "default",
-    pattern: "{controller=Home}/{action=Index}/{id?}"
+    pattern: "{controller=EmployeeMVC}/{action=Index}/{id?}"
 );
 
 app.Run();
